@@ -3,9 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Job Search</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
-    <script src="scripts/linkedInscraper.js"></script>
+    <div class="container">
+      <h1>Find Your Dream Job</h1>
+      <input
+        type="text"
+        placeholder="Enter your job search"
+        class="search-input"
+        id="jobSearchInput"
+      />
+      <button id="searchButton" class="search-button">Search</button>
+    </div>
+    <script>
+      document.getElementById("searchButton").addEventListener("click", () => {
+        const jobTitle = document.getElementById("jobSearchInput").value;
+        fetch("http://localhost:3000/scrape", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ jobTitle }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Scrape result:", data);
+          })
+          .catch((error) => console.error("Error:", error));
+      });
+    </script>
   </body>
 </html>
